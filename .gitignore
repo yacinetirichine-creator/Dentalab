@@ -1,0 +1,40 @@
+# Dépendances
+/node_modules
+/vendor
+/apps/web/vendor
+/apps/web/node_modules
+
+# Build
+/apps/web/public/build
+/apps/web/public/hot
+/apps/web/public/storage
+/apps/web/storage/*.key
+/apps/web/storage/pail
+/apps/web/bootstrap/cache/*.php
+
+# Environnement — ne jamais committer de secret
+.env
+.env.*
+!.env.example
+/apps/web/.env
+/apps/web/.env.*
+!/apps/web/.env.example
+/apps/web/auth.json
+
+# Tests et outils
+/.phpunit.cache
+/apps/web/.phpunit.cache
+/apps/web/.phpunit.result.cache
+/.php-cs-fixer.cache
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+*.swp

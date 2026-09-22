@@ -24,7 +24,7 @@ class ExigerDoubleAuthentification
         if ($utilisateur?->doitActiverLaDoubleAuthentification()) {
             return redirect()
                 ->route('double-authentification')
-                ->with('status', 'Votre rôle exige la double authentification. Activez-la pour continuer.');
+                ->with('status', __('interface.doubleAuthentification.exigeeParVotreRole'));
         }
 
         return $suivant($requete);

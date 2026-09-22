@@ -1,5 +1,6 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
+import { useTraduction } from '@/traductions';
 import type { ProprietesPartagees } from '@/types';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
  */
 export default function MiseEnPage({ titre, children }: Props) {
     const { utilisateur, menu, message } = usePage<ProprietesPartagees>().props;
+    const t = useTraduction();
 
     return (
         <div className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
@@ -31,14 +33,14 @@ export default function MiseEnPage({ titre, children }: Props) {
                     {utilisateur && (
                         <div className="flex items-center gap-4 text-sm">
                             <span className="opacity-70">
-                                {utilisateur.nom} — {utilisateur.roleLibelle ?? 'rôle non attribué'}
+                                {utilisateur.nom} — {utilisateur.roleLibelle ?? t('commun.roleNonAttribue')}
                             </span>
                             <button
                                 type="button"
                                 onClick={() => router.post('/logout')}
                                 className="rounded border border-neutral-300 px-3 py-1 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
                             >
-                                Se déconnecter
+                                {t('commun.seDeconnecter')}
                             </button>
                         </div>
                     )}

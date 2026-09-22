@@ -24,13 +24,13 @@ class Menu
         }
 
         $entrees = [
-            ['libelle' => 'Tableau de bord', 'route' => 'tableau-de-bord', 'permission' => null],
-            ['libelle' => 'Nouvelle commande', 'route' => 'commandes.nouvelle', 'permission' => Permission::SaisirCommande],
-            ['libelle' => 'Atelier', 'route' => 'atelier', 'permission' => Permission::ValiderEtapeFabrication],
-            ['libelle' => 'Ma tournée', 'route' => 'tournee', 'permission' => Permission::VoirTournee],
-            ['libelle' => 'Mes travaux', 'route' => 'mes-travaux', 'permission' => Permission::SuivreSesTravaux],
-            ['libelle' => 'Facturation', 'route' => 'facturation', 'permission' => Permission::Facturer],
-            ['libelle' => 'Paramètres', 'route' => 'parametres', 'permission' => Permission::ParametrerLaboratoire],
+            ['libelle' => __('interface.menu.tableauDeBord'), 'route' => 'tableau-de-bord', 'permission' => null],
+            ['libelle' => __('interface.menu.nouvelleCommande'), 'route' => 'commandes.nouvelle', 'permission' => Permission::SaisirCommande],
+            ['libelle' => __('interface.menu.atelier'), 'route' => 'atelier', 'permission' => Permission::ValiderEtapeFabrication],
+            ['libelle' => __('interface.menu.tournee'), 'route' => 'tournee', 'permission' => Permission::VoirTournee],
+            ['libelle' => __('interface.menu.mesTravaux'), 'route' => 'mes-travaux', 'permission' => Permission::SuivreSesTravaux],
+            ['libelle' => __('interface.menu.facturation'), 'route' => 'facturation', 'permission' => Permission::Facturer],
+            ['libelle' => __('interface.menu.parametres'), 'route' => 'parametres', 'permission' => Permission::ParametrerLaboratoire],
         ];
 
         $visibles = [];

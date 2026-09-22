@@ -1,11 +1,13 @@
 import { Head, useForm } from '@inertiajs/react';
 import type { FormEvent } from 'react';
+import { useTraduction } from '@/traductions';
 
 interface Props {
     statut?: string | null;
 }
 
 export default function Connexion({ statut }: Props) {
+    const t = useTraduction();
     const formulaire = useForm({ email: '', password: '', remember: false });
 
     function soumettre(evenement: FormEvent) {
@@ -15,17 +17,19 @@ export default function Connexion({ statut }: Props) {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-6 py-12 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
-            <Head title="Connexion" />
+            <Head title={t('connexion.seConnecter')} />
 
             <div className="w-full max-w-sm">
                 <h1 className="mb-1 text-2xl font-semibold">Dentalab</h1>
-                <p className="mb-8 text-sm opacity-60">Connectez-vous à votre laboratoire.</p>
+                <p className="mb-8 text-sm opacity-60">{t('connexion.invitation')}</p>
 
                 {statut && <p className="mb-4 text-sm text-emerald-700 dark:text-emerald-400">{statut}</p>}
 
                 <form onSubmit={soumettre} className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="mb-1 block text-sm">Adresse e-mail</label>
+                        <label htmlFor="email" className="mb-1 block text-sm">
+                            {t('connexion.email')}
+                        </label>
                         <input
                             id="email"
                             type="email"
@@ -42,7 +46,9 @@ export default function Connexion({ statut }: Props) {
                     </div>
 
                     <div>
-                        <label htmlFor="password" className="mb-1 block text-sm">Mot de passe</label>
+                        <label htmlFor="password" className="mb-1 block text-sm">
+                            {t('connexion.motDePasse')}
+                        </label>
                         <input
                             id="password"
                             type="password"
@@ -60,7 +66,7 @@ export default function Connexion({ statut }: Props) {
                             checked={formulaire.data.remember}
                             onChange={(e) => formulaire.setData('remember', e.target.checked)}
                         />
-                        Rester connecté
+                        {t('connexion.resterConnecte')}
                     </label>
 
                     <button
@@ -68,7 +74,7 @@ export default function Connexion({ statut }: Props) {
                         disabled={formulaire.processing}
                         className="w-full rounded bg-neutral-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
                     >
-                        Se connecter
+                        {t('connexion.seConnecter')}
                     </button>
                 </form>
             </div>

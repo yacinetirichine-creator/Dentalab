@@ -30,32 +30,34 @@ Route::middleware('auth')->group(function () {
 
         // Écrans à construire dans les lots suivants. Ils existent dès
         // maintenant pour que les droits de chaque rôle soient testés.
-        $chantier = fn (string $titre, string $lot) => fn () => Inertia::render('Chantier', [
-            'titre' => $titre,
+        // Le titre est traduit au rendu, pas à la déclaration de la route :
+        // la langue dépend de la requête, pas du démarrage de l'application.
+        $chantier = fn (string $cleDuTitre, string $lot) => fn () => Inertia::render('Chantier', [
+            'titre' => __('interface.ecrans.'.$cleDuTitre),
             'lot' => $lot,
         ]);
 
-        Route::get('/parametres', $chantier('Paramètres du laboratoire', '1.4'))
+        Route::get('/parametres', $chantier('parametres', '1.4'))
             ->middleware('can:'.Permission::ParametrerLaboratoire->value)
             ->name('parametres');
 
-        Route::get('/facturation', $chantier('Facturation', '3.4'))
+        Route::get('/facturation', $chantier('facturation', '3.4'))
             ->middleware('can:'.Permission::Facturer->value)
             ->name('facturation');
 
-        Route::get('/commandes/nouvelle', $chantier('Nouvelle commande', '2.1'))
+        Route::get('/commandes/nouvelle', $chantier('nouvelleCommande', '2.1'))
             ->middleware('can:'.Permission::SaisirCommande->value)
             ->name('commandes.nouvelle');
 
-        Route::get('/atelier', $chantier('Atelier — validation des étapes', '2.5'))
+        Route::get('/atelier', $chantier('atelier', '2.5'))
             ->middleware('can:'.Permission::ValiderEtapeFabrication->value)
             ->name('atelier');
 
-        Route::get('/tournee', $chantier('Ma tournée', '5.5'))
+        Route::get('/tournee', $chantier('tournee', '5.5'))
             ->middleware('can:'.Permission::VoirTournee->value)
             ->name('tournee');
 
-        Route::get('/mes-travaux', $chantier('Mes travaux', '5.1'))
+        Route::get('/mes-travaux', $chantier('mesTravaux', '5.1'))
             ->middleware('can:'.Permission::SuivreSesTravaux->value)
             ->name('mes-travaux');
     });

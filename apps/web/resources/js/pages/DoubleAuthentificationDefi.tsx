@@ -1,11 +1,13 @@
 import { Head, useForm } from '@inertiajs/react';
 import { type FormEvent, useState } from 'react';
+import { useTraduction } from '@/traductions';
 
 /**
  * Deuxième étape de la connexion : le code à six chiffres, ou un code de
  * secours si l'utilisateur n'a plus son téléphone.
  */
 export default function DoubleAuthentificationDefi() {
+    const t = useTraduction();
     const [codeDeSecours, setCodeDeSecours] = useState(false);
     const formulaire = useForm({ code: '', recovery_code: '' });
 
@@ -16,20 +18,20 @@ export default function DoubleAuthentificationDefi() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-6 py-12 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
-            <Head title="Double authentification" />
+            <Head title={t('defi.titre')} />
 
             <div className="w-full max-w-sm">
-                <h1 className="mb-1 text-2xl font-semibold">Vérification</h1>
+                <h1 className="mb-1 text-2xl font-semibold">{t('defi.titre')}</h1>
                 <p className="mb-8 text-sm opacity-60">
-                    {codeDeSecours
-                        ? 'Saisissez un de vos codes de secours.'
-                        : 'Saisissez le code affiché par votre application d’authentification.'}
+                    {codeDeSecours ? t('defi.consigneSecours') : t('defi.consigneApplication')}
                 </p>
 
                 <form onSubmit={soumettre} className="space-y-4">
                     {codeDeSecours ? (
                         <div>
-                            <label htmlFor="recovery_code" className="mb-1 block text-sm">Code de secours</label>
+                            <label htmlFor="recovery_code" className="mb-1 block text-sm">
+                                {t('defi.codeDeSecours')}
+                            </label>
                             <input
                                 id="recovery_code"
                                 autoComplete="one-time-code"
@@ -40,12 +42,16 @@ export default function DoubleAuthentificationDefi() {
                                 className="w-full rounded border border-neutral-300 px-3 py-2 dark:border-neutral-700 dark:bg-neutral-900"
                             />
                             {formulaire.errors.recovery_code && (
-                                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{formulaire.errors.recovery_code}</p>
+                                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                                    {formulaire.errors.recovery_code}
+                                </p>
                             )}
                         </div>
                     ) : (
                         <div>
-                            <label htmlFor="code" className="mb-1 block text-sm">Code à six chiffres</label>
+                            <label htmlFor="code" className="mb-1 block text-sm">
+                                {t('defi.code')}
+                            </label>
                             <input
                                 id="code"
                                 inputMode="numeric"
@@ -67,7 +73,7 @@ export default function DoubleAuthentificationDefi() {
                         disabled={formulaire.processing}
                         className="w-full rounded bg-neutral-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
                     >
-                        Vérifier
+                        {t('defi.verifier')}
                     </button>
 
                     <button
@@ -75,7 +81,7 @@ export default function DoubleAuthentificationDefi() {
                         onClick={() => setCodeDeSecours(!codeDeSecours)}
                         className="w-full text-sm underline opacity-70"
                     >
-                        {codeDeSecours ? 'Utiliser le code de mon application' : 'Utiliser un code de secours'}
+                        {codeDeSecours ? t('defi.utiliserApplication') : t('defi.utiliserSecours')}
                     </button>
                 </form>
             </div>

@@ -44,6 +44,26 @@ class ConnexionTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_les_messages_de_validation_sont_en_francais(): void
+    {
+        $this->post('/login', ['email' => '', 'password' => ''])
+            ->assertSessionHasErrors([
+                'email' => 'Le champ adresse e-mail est obligatoire.',
+            ]);
+    }
+
+    public function test_les_identifiants_refuses_le_sont_en_francais(): void
+    {
+        User::factory()->create(['email' => 'technicien@labo.test']);
+
+        $this->post('/login', [
+            'email' => 'technicien@labo.test',
+            'password' => 'ce-n-est-pas-le-bon',
+        ])->assertSessionHasErrors([
+            'email' => __('auth.failed'),
+        ]);
+    }
+
     public function test_la_deconnexion_ferme_la_session(): void
     {
         $utilisateur = User::factory()->role(Role::Prothesiste)->create();

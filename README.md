@@ -19,9 +19,10 @@ place. Le code métier attend les réponses du terrain.
 | 1.1 — Squelette Laravel + Inertia + React, CI | ✅ fait |
 | 1.2 — Multi-laboratoires et cloisonnement des données | ✅ fait |
 | 1.3 — Comptes, connexion, rôles, double authentification | ✅ fait |
+| 1.6 — Internationalisation des écrans | ✅ fait |
 | **Phase 0 — visites de labos, réglementaire, maquettes** | ⬜ **à faire — chemin critique** |
 | 1.4 — Clients (cabinets et praticiens) | ⬜ dépend de la phase 0 |
-| 1.6 — Internationalisation des écrans | ⬜ à faire |
+| 1.5 — Catalogue et tarifs | ⬜ dépend de la phase 0 |
 
 **La phase 0 se mène en parallèle et conditionne la suite** :
 [`docs/phase-0-cadrage.md`](docs/phase-0-cadrage.md) explique comment la mener,
@@ -93,6 +94,8 @@ Ces quatre commandes sont exactement ce que lance la CI à chaque pull request
 6. **Données de santé** : référence patient pseudonymisée par défaut, journal des accès,
    aucune donnée patient en clair dans les journaux techniques.
 7. **Internationalisation** : aucune chaîne d'interface en dur, même en français seul.
+   Les textes vivent dans `apps/web/lang/fr/`, et un test échoue si l'un d'eux
+   réapparaît dans un composant.
 
 ## Réglementaire — à valider avant le développement
 

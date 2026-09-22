@@ -57,6 +57,10 @@ class HandleInertiaRequests extends Middleware
             'menu' => fn () => Menu::pour($utilisateur),
 
             'message' => fn () => $request->session()->get('status'),
+
+            // Les chaînes d'interface vivent dans lang/<langue>/interface.php
+            // et sont lues côté React par le crochet useTraduction().
+            'traductions' => fn () => __('interface'),
         ];
     }
 }

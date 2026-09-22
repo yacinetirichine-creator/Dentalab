@@ -42,7 +42,10 @@ en anglais, évidemment.
    numérotation est continue, sans trou, générée en base sous verrou.
 5. Référence patient pseudonymisée par défaut. Aucune donnée patient dans les
    journaux techniques. La question de l'hébergement HDS est tranchée en phase 0.
-6. Aucune chaîne d'interface en dur, même en français seul.
+6. Aucune chaîne d'interface en dur, même en français seul : les textes vivent
+   dans `apps/web/lang/fr/`, et se lisent avec `__()` côté serveur, avec le
+   crochet `useTraduction()` côté React. Un test relit les composants et
+   échoue si un texte y réapparaît.
 
 ## Points sensibles du métier
 

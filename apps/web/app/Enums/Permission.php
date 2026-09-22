@@ -27,19 +27,6 @@ enum Permission: string
 
     public function libelle(): string
     {
-        return match ($this) {
-            self::ParametrerLaboratoire => 'Paramétrer le laboratoire',
-            self::GererClients => 'Gérer les cabinets et les praticiens',
-            self::GererCatalogue => 'Gérer le catalogue et les tarifs',
-            self::Facturer => 'Facturer',
-            self::VoirIndicateurs => 'Consulter les indicateurs',
-            self::SaisirCommande => 'Saisir une commande',
-            self::PreparerLivraison => 'Préparer une livraison',
-            self::ValiderEtapeFabrication => 'Valider une étape de fabrication',
-            self::VoirTournee => 'Consulter sa tournée',
-            self::CommanderEnLigne => 'Commander en ligne',
-            self::SuivreSesTravaux => 'Suivre ses travaux',
-            self::AdministrerPlateforme => 'Administrer la plateforme',
-        };
+        return __('permissions.'.$this->value);
     }
 }

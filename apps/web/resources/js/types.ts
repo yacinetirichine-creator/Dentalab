@@ -14,10 +14,16 @@ export interface EntreeMenu {
     url: string;
 }
 
+/** Un arbre de traductions : des chaînes, éventuellement imbriquées. */
+export interface ArbreDeTraductions {
+    [cle: string]: string | ArbreDeTraductions;
+}
+
 /** Les propriétés que le serveur partage avec toutes les pages. */
 export interface ProprietesPartagees {
     utilisateur: Utilisateur | null;
     menu: EntreeMenu[];
     message: string | null;
+    traductions: ArbreDeTraductions;
     [cle: string]: unknown;
 }

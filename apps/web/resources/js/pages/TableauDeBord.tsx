@@ -1,29 +1,36 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import MiseEnPage from '@/composants/MiseEnPage';
+import { useTraduction } from '@/traductions';
 import type { ProprietesPartagees } from '@/types';
 
 export default function TableauDeBord() {
     const { utilisateur, menu } = usePage<ProprietesPartagees>().props;
+    const t = useTraduction();
 
     return (
-        <MiseEnPage titre="Tableau de bord">
-            <Head title="Tableau de bord" />
+        <MiseEnPage titre={t('tableauDeBord.titre')}>
+            <Head title={t('tableauDeBord.titre')} />
 
             <div className="space-y-8 text-sm leading-relaxed">
                 <p>
-                    Bonjour {utilisateur?.nom}. Vous êtes connecté en tant que{' '}
-                    <strong>{utilisateur?.roleLibelle ?? 'utilisateur sans rôle attribué'}</strong>
-                    {utilisateur?.laboratoire && <> au laboratoire {utilisateur.laboratoire}</>}.
+                    {t('tableauDeBord.salutation', { nom: utilisateur?.nom ?? '' })}{' '}
+                    <strong>{utilisateur?.roleLibelle ?? t('tableauDeBord.sansRole')}</strong>
+                    {utilisateur?.laboratoire && (
+                        <>
+                            {' '}
+                            {t('tableauDeBord.auLaboratoire', { laboratoire: utilisateur.laboratoire })}
+                        </>
+                    )}
+                    .
                 </p>
 
                 {menu.length <= 1 ? (
                     <p className="rounded border border-neutral-300 px-4 py-3 opacity-70 dark:border-neutral-700">
-                        Aucun écran ne vous est ouvert pour l’instant. Si c’est inattendu,
-                        demandez au gérant de vérifier votre rôle.
+                        {t('tableauDeBord.aucunEcran')}
                     </p>
                 ) : (
                     <div>
-                        <p className="mb-3 font-medium">Ce que vous pouvez faire</p>
+                        <p className="mb-3 font-medium">{t('tableauDeBord.cePourquoiVousEtesHabilite')}</p>
                         <ul className="space-y-2">
                             {menu
                                 .filter((entree) => entree.route !== 'tableau-de-bord')
@@ -41,9 +48,9 @@ export default function TableauDeBord() {
                 {utilisateur && !utilisateur.doubleAuthentificationActivee && (
                     <p className="text-xs opacity-60">
                         <Link href="/double-authentification" className="underline">
-                            Activer la double authentification
+                            {t('doubleAuthentification.invitation')}
                         </Link>{' '}
-                        pour protéger votre compte.
+                        {t('doubleAuthentification.invitationSuite')}
                     </p>
                 )}
             </div>

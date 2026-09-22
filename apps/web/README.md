@@ -133,6 +133,42 @@ php artisan laboratoire:creer
 
 qui crée le laboratoire, son compte gérant et un mot de passe affiché une seule fois.
 
+## Les textes affichés
+
+Aucune chaîne d'interface n'est écrite dans un composant. Tout vit dans
+`lang/fr/` :
+
+| Fichier | Contenu |
+|---|---|
+| `interface.php` | Les textes des écrans, du menu et des titres |
+| `roles.php`, `permissions.php` | Les libellés des rôles et des droits |
+| `validation.php`, `auth.php`, `passwords.php`, `pagination.php` | Les messages de Laravel, en français |
+
+Côté serveur, `__('interface.connexion.email')` comme d'habitude. Côté React, les
+traductions arrivent par Inertia et se lisent avec un crochet :
+
+```tsx
+const t = useTraduction();
+
+<button>{t('connexion.seConnecter')}</button>
+<p>{t('chantier.explication', { lot: '2.1' })}</p>
+```
+
+Une clé absente s'affiche telle quelle à l'écran — mieux vaut voir
+`connexion.email` qu'un blanc silencieux.
+
+**Trois tests tiennent la règle** (`tests/Feature/InterfaceTraduiteTest.php`) :
+
+- chaque composant est relu, et le test échoue s'il contient du texte entre
+  deux balises, un attribut visible littéral, ou un caractère accentué hors
+  commentaire ;
+- toute clé appelée par un composant doit exister dans `interface.php` ;
+- le garde-fou lui-même est testé sur deux pièges, pour qu'il ne devienne pas
+  un test qui ne vérifie plus rien.
+
+Pour ajouter une langue : dupliquer `lang/fr/` dans `lang/<langue>/` et poser
+`APP_LOCALE`.
+
 ## Conventions
 
 Les règles du projet sont dans [`CLAUDE.md`](../../CLAUDE.md) à la racine.

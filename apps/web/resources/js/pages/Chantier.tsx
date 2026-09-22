@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import MiseEnPage from '@/composants/MiseEnPage';
+import { useTraduction } from '@/traductions';
 
 interface Props {
     titre: string;
@@ -15,13 +16,14 @@ interface Props {
  * pourra faire.
  */
 export default function Chantier({ titre, lot }: Props) {
+    const t = useTraduction();
+
     return (
         <MiseEnPage titre={titre}>
             <Head title={titre} />
 
             <p className="max-w-xl text-sm leading-relaxed opacity-70">
-                Cet écran reste à construire : il fait partie du lot {lot} du plan de travail.
-                Vous y avez accès, c’est déjà ce qui est vérifié ici.
+                {t('chantier.explication', { lot })}
             </p>
         </MiseEnPage>
     );

@@ -20,14 +20,7 @@ enum Role: string
 
     public function libelle(): string
     {
-        return match ($this) {
-            self::Gerant => 'Gérant du laboratoire',
-            self::Prothesiste => 'Prothésiste',
-            self::Secretaire => 'Secrétaire',
-            self::Livreur => 'Livreur',
-            self::Dentiste => 'Dentiste',
-            self::AdministrateurPlateforme => 'Administrateur de la plateforme',
-        };
+        return __('roles.'.$this->value);
     }
 
     /**

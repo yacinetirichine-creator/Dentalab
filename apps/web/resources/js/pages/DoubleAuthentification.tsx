@@ -1,6 +1,7 @@
 import { Head, router, useForm } from '@inertiajs/react';
 import { type FormEvent, useEffect, useState } from 'react';
 import MiseEnPage from '@/composants/MiseEnPage';
+import { useTraduction } from '@/traductions';
 
 interface Props {
     /** Le rôle de l'utilisateur impose-t-il la double authentification ? */
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function DoubleAuthentification({ obligatoire, activee, enAttenteDeConfirmation }: Props) {
+    const t = useTraduction();
     const [qr, setQr] = useState<string | null>(null);
     const [codesDeSecours, setCodesDeSecours] = useState<string[]>([]);
     const confirmation = useForm({ code: '' });
@@ -44,40 +46,32 @@ export default function DoubleAuthentification({ obligatoire, activee, enAttente
     }
 
     return (
-        <MiseEnPage titre="Double authentification">
-            <Head title="Double authentification" />
+        <MiseEnPage titre={t('doubleAuthentification.titre')}>
+            <Head title={t('doubleAuthentification.titre')} />
 
             <div className="max-w-xl space-y-6 text-sm leading-relaxed">
                 {obligatoire && !activee && (
                     <p className="rounded border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100">
-                        Votre rôle donne accès à la facturation et aux paramètres du laboratoire.
-                        La double authentification est obligatoire pour continuer.
+                        {t('doubleAuthentification.exigee')}
                     </p>
                 )}
 
                 {!activee && !enAttenteDeConfirmation && (
                     <>
-                        <p>
-                            Un code à six chiffres, changeant toutes les trente secondes, vous sera
-                            demandé à chaque connexion. Il faut une application d’authentification
-                            sur votre téléphone.
-                        </p>
+                        <p>{t('doubleAuthentification.principe')}</p>
                         <button
                             type="button"
                             onClick={() => router.post('/user/two-factor-authentication')}
                             className="rounded bg-neutral-900 px-4 py-2 text-white dark:bg-neutral-100 dark:text-neutral-900"
                         >
-                            Activer la double authentification
+                            {t('doubleAuthentification.activer')}
                         </button>
                     </>
                 )}
 
                 {enAttenteDeConfirmation && (
                     <>
-                        <p>
-                            Scannez ce code avec votre application d’authentification, puis saisissez
-                            le code à six chiffres qu’elle affiche.
-                        </p>
+                        <p>{t('doubleAuthentification.consigneScan')}</p>
 
                         {qr ? (
                             <div
@@ -86,11 +80,13 @@ export default function DoubleAuthentification({ obligatoire, activee, enAttente
                                 dangerouslySetInnerHTML={{ __html: qr }}
                             />
                         ) : (
-                            <p className="opacity-60">Préparation du code…</p>
+                            <p className="opacity-60">{t('doubleAuthentification.preparationDuCode')}</p>
                         )}
 
                         <form onSubmit={confirmer} className="max-w-xs space-y-3">
-                            <label htmlFor="code" className="block">Code à six chiffres</label>
+                            <label htmlFor="code" className="block">
+                                {t('doubleAuthentification.code')}
+                            </label>
                             <input
                                 id="code"
                                 inputMode="numeric"
@@ -108,7 +104,7 @@ export default function DoubleAuthentification({ obligatoire, activee, enAttente
                                 disabled={confirmation.processing}
                                 className="rounded bg-neutral-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
                             >
-                                Confirmer
+                                {t('doubleAuthentification.confirmer')}
                             </button>
                         </form>
                     </>
@@ -117,15 +113,14 @@ export default function DoubleAuthentification({ obligatoire, activee, enAttente
                 {activee && (
                     <>
                         <p className="rounded border border-emerald-300 bg-emerald-50 px-4 py-3 text-emerald-900 dark:border-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">
-                            La double authentification est active sur votre compte.
+                            {t('doubleAuthentification.active')}
                         </p>
 
                         {codesDeSecours.length > 0 && (
                             <div>
-                                <p className="mb-2 font-medium">Codes de secours</p>
+                                <p className="mb-2 font-medium">{t('doubleAuthentification.codesDeSecours')}</p>
                                 <p className="mb-3 opacity-70">
-                                    Conservez-les hors de votre téléphone. Ils sont votre seul moyen
-                                    d’entrer si vous le perdez, et chacun ne sert qu’une fois.
+                                    {t('doubleAuthentification.codesDeSecoursExplication')}
                                 </p>
                                 <ul className="rounded bg-neutral-100 p-4 font-mono text-xs dark:bg-neutral-900">
                                     {codesDeSecours.map((code) => (
@@ -141,7 +136,7 @@ export default function DoubleAuthentification({ obligatoire, activee, enAttente
                                 onClick={() => router.delete('/user/two-factor-authentication')}
                                 className="rounded border border-neutral-300 px-4 py-2 dark:border-neutral-700"
                             >
-                                Désactiver
+                                {t('doubleAuthentification.desactiver')}
                             </button>
                         )}
                     </>

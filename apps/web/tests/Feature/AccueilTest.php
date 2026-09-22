@@ -9,8 +9,6 @@ class AccueilTest extends TestCase
 {
     public function test_la_page_d_accueil_repond_et_rend_la_page_inertia(): void
     {
-        $this->withoutVite();
-
         $this->get('/')
             ->assertOk()
             ->assertInertia(

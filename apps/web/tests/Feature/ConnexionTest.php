@@ -14,8 +14,7 @@ class ConnexionTest extends TestCase
 
     public function test_l_ecran_de_connexion_s_affiche(): void
     {
-        $this->withoutVite()
-            ->get('/login')
+        $this->get('/login')
             ->assertOk();
     }
 

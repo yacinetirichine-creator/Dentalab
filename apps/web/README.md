@@ -84,6 +84,55 @@ app(LaboratoireCourant::class)->sansCloisonnement(fn () => Travail::all());
 
 Les garde-fous sont testés dans `tests/Feature/CloisonnementTest.php`.
 
+## Comptes, rôles et droits
+
+Six profils (§2 du cahier des charges), définis dans `app/Enums/Role.php`. Chaque rôle
+porte une liste de permissions (`app/Enums/Permission.php`) ; les permissions ne sont
+jamais attribuées à une personne en particulier.
+
+| Rôle | Ce qu'il peut faire |
+|---|---|
+| Gérant | Paramétrer le labo, clients, catalogue, facturer, indicateurs, saisir une commande, valider une étape |
+| Prothésiste | Valider une étape de fabrication |
+| Secrétaire | Saisir une commande, préparer une livraison |
+| Livreur | Consulter sa tournée |
+| Dentiste | Commander en ligne, suivre ses travaux |
+| Administrateur de la plateforme | Administrer la plateforme — et rien d'autre : il n'accède à aucune donnée métier |
+
+**Un compte sans rôle n'a aucun droit.** Le refus est la valeur par défaut.
+
+Chaque permission devient une capacité du framework, utilisable partout :
+
+```php
+Route::get('/facturation', ...)->middleware('can:facturer');   // dans les routes
+$utilisateur->can('facturer');                                  // dans le code
+$utilisateur->peut(Permission::Facturer);                       // forme typée
+```
+
+Le menu affiché est déduit des permissions (`app/Support/Navigation/Menu.php`), mais
+**cacher une entrée n'est pas une sécurité** : chaque route porte aussi sa propre
+vérification.
+
+### Connexion et double authentification
+
+L'authentification est assurée par [Laravel Fortify](https://laravel.com/docs/fortify),
+l'implémentation officielle — le code de la double authentification (TOTP, codes de
+secours) n'est pas écrit à la main. Les écrans sont des pages Inertia normales,
+branchées dans `app/Providers/FortifyServiceProvider.php`.
+
+**La double authentification est obligatoire pour le gérant et l'administrateur de la
+plateforme.** Tant qu'ils ne l'ont pas activée, le middleware
+`ExigerDoubleAuthentification` les renvoie vers l'écran d'activation. Les autres rôles
+peuvent l'activer sans y être contraints.
+
+Il n'y a pas d'inscription publique : un laboratoire est mis en service par la commande
+
+```bash
+php artisan laboratoire:creer
+```
+
+qui crée le laboratoire, son compte gérant et un mot de passe affiché une seule fois.
+
 ## Conventions
 
 Les règles du projet sont dans [`CLAUDE.md`](../../CLAUDE.md) à la racine.

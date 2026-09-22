@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Navigation\Menu;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,9 +36,27 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $utilisateur = $request->user();
+
         return [
             ...parent::share($request),
-            //
+
+            'utilisateur' => $utilisateur === null ? null : [
+                'nom' => $utilisateur->name,
+                'email' => $utilisateur->email,
+                'role' => $utilisateur->role?->value,
+                'roleLibelle' => $utilisateur->role?->libelle(),
+                'laboratoire' => $utilisateur->laboratoire?->nom,
+                'doubleAuthentificationActivee' => $utilisateur->two_factor_confirmed_at !== null,
+                'permissions' => array_map(
+                    fn ($permission) => $permission->value,
+                    $utilisateur->permissions()
+                ),
+            ],
+
+            'menu' => fn () => Menu::pour($utilisateur),
+
+            'message' => fn () => $request->session()->get('status'),
         ];
     }
 }

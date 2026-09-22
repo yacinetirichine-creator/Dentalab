@@ -36,9 +36,16 @@ demander à un expert-comptable et à un juriste : [`phase-0-cadrage.md`](phase-
 |---|---|---|
 | 1.1 ✅ | Squelette Laravel + Inertia + React, CI verte | Un test « la page d'accueil répond 200 » |
 | 1.2 ✅ | Multi-tenant : table `laboratoires`, colonne `laboratoire_id` sur toute table métier, filtrage automatique | Test de cloisonnement : le labo A ne voit jamais une donnée du labo B |
-| 1.3 | Comptes, connexion, rôles (gérant, prothésiste, secrétaire, livreur, dentiste), double authentification pour les gérants | Un test par rôle : ce qu'il voit, ce qu'il ne voit pas |
+| 1.3 ✅ | Comptes, connexion, rôles (gérant, prothésiste, secrétaire, livreur, dentiste), double authentification pour les gérants | Un test par rôle : ce qu'il voit, ce qu'il ne voit pas |
 | 1.4 | Clients : cabinets, praticiens rattachés, adresses de livraison | Création, modification, archivage |
 | 1.5 | Catalogue : articles, gammes, prix, TVA par article, grilles tarifaires et remises par client | Test du calcul de prix avec remise client |
+| 1.6 | Internationalisation : sortir les chaînes d'interface des composants vers des fichiers de traduction, traduire les messages de validation en français | Un test qui échoue si une chaîne d'interface est écrite en dur |
+
+> **Dette assumée sur le lot 1.6.** Les écrans du lot 1.3 ont leurs libellés
+> écrits directement dans les composants React, ce que la règle n° 7 du projet
+> interdit. C'est un choix de rapidité, pas un oubli : l'extraction se fera en
+> une fois, sur un nombre d'écrans encore réduit. Tant que le lot 1.6 n'est pas
+> livré, la règle n° 7 n'est pas respectée — il ne faut pas s'appuyer dessus.
 
 **Fin de phase 1** : un gérant peut créer son labo, ses utilisateurs, ses clients et son catalogue.
 

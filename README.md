@@ -18,8 +18,10 @@ place. Le code métier attend les réponses du terrain.
 |---|---|
 | 1.1 — Squelette Laravel + Inertia + React, CI | ✅ fait |
 | 1.2 — Multi-laboratoires et cloisonnement des données | ✅ fait |
-| Phase 0 — visites de labos, réglementaire, maquettes | ⬜ à faire |
-| 1.3 — Comptes, rôles, double authentification | ⬜ à faire |
+| 1.3 — Comptes, connexion, rôles, double authentification | ✅ fait |
+| **Phase 0 — visites de labos, réglementaire, maquettes** | ⬜ **à faire — chemin critique** |
+| 1.4 — Clients (cabinets et praticiens) | ⬜ dépend de la phase 0 |
+| 1.6 — Internationalisation des écrans | ⬜ à faire |
 
 **La phase 0 se mène en parallèle et conditionne la suite** :
 [`docs/phase-0-cadrage.md`](docs/phase-0-cadrage.md) explique comment la mener,

@@ -3,13 +3,21 @@
 namespace App\Support\Tenancy;
 
 use App\Models\Laboratoire;
+use Illuminate\Support\Facades\Auth;
 
 /**
- * Retient le laboratoire pour lequel la requête en cours travaille.
+ * Le laboratoire pour lequel la requête en cours travaille.
  *
- * Enregistré en singleton : le middleware le renseigne à partir de
- * l'utilisateur connecté, et le trait AppartientAuLaboratoire s'en sert pour
- * filtrer automatiquement toutes les requêtes métier.
+ * Il vient du compte connecté, et de nulle part ailleurs : jamais d'un
+ * paramètre d'URL, d'un en-tête ou d'un champ de formulaire. Sinon un
+ * utilisateur pourrait désigner le laboratoire d'un concurrent.
+ *
+ * La résolution est paresseuse, faite au premier besoin, et non posée par un
+ * middleware : le framework résout les paramètres d'URL (`/clients/{cabinet}`)
+ * à l'intérieur de sa propre pile de middlewares, donc avant tout middleware
+ * applicatif ajouté à la suite. Une lecture cloisonnée peut ainsi arriver
+ * avant lui. Dépendre de l'ordre des middlewares serait fragile ; dépendre de
+ * l'utilisateur connecté ne l'est pas.
  */
 class LaboratoireCourant
 {
@@ -18,6 +26,12 @@ class LaboratoireCourant
     /** Vrai pendant un appel à sansCloisonnement(). */
     protected bool $cloisonnementDesactive = false;
 
+    /**
+     * Force un laboratoire, indépendamment du compte connecté.
+     *
+     * Utile en console, dans les tests, et partout où il n'y a pas de
+     * requête HTTP.
+     */
     public function definir(Laboratoire|int|null $laboratoire): void
     {
         $this->id = $laboratoire instanceof Laboratoire
@@ -32,12 +46,12 @@ class LaboratoireCourant
 
     public function id(): ?int
     {
-        return $this->id;
+        return $this->id ??= Auth::user()?->laboratoire_id;
     }
 
     public function estDefini(): bool
     {
-        return $this->id !== null;
+        return $this->id() !== null;
     }
 
     public function cloisonnementActif(): bool

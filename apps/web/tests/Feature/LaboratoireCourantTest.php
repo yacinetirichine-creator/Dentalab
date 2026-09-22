@@ -11,6 +11,10 @@ use Tests\TestCase;
 
 /**
  * Le laboratoire courant vient du compte connecté, jamais de la requête.
+ *
+ * La route d'essai ci-dessous lit le laboratoire courant au moment où la
+ * requête est servie, sans qu'aucun middleware applicatif ne l'ait posé :
+ * c'est exactement la situation d'une résolution de paramètre d'URL.
  */
 class LaboratoireCourantTest extends TestCase
 {

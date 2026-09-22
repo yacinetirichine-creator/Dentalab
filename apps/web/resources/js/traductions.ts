@@ -27,8 +27,30 @@ export function traduire(
 
     return Object.entries(remplacements).reduce(
         (texte, [nom, remplacement]) => texte.replaceAll(`:${nom}`, String(remplacement)),
-        valeur,
+        accorder(valeur, remplacements.nombre),
     );
+}
+
+/**
+ * Choisit la forme d'une chaîne au pluriel : « :nombre praticien|:nombre praticiens ».
+ *
+ * Règle du français : zéro et un restent au singulier, le reste au pluriel.
+ * Les langues à plus de deux formes demanderont mieux ; ce sera le moment de
+ * poser une vraie bibliothèque plutôt que d'étoffer celle-ci.
+ */
+function accorder(valeur: string, nombre: string | number | undefined): string {
+    if (!valeur.includes('|')) {
+        return valeur;
+    }
+
+    const formes = valeur.split('|');
+    const compte = typeof nombre === 'number' ? nombre : Number(nombre);
+
+    if (Number.isNaN(compte)) {
+        return formes[0];
+    }
+
+    return compte <= 1 ? formes[0] : formes[formes.length - 1];
 }
 
 /**

@@ -1,6 +1,9 @@
 <?php
 
 use App\Enums\Permission;
+use App\Http\Controllers\Clients\AdresseLivraisonController;
+use App\Http\Controllers\Clients\CabinetController;
+use App\Http\Controllers\Clients\PraticienController;
 use App\Http\Middleware\ExigerDoubleAuthentification;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,7 +40,32 @@ Route::middleware('auth')->group(function () {
             'lot' => $lot,
         ]);
 
-        Route::get('/parametres', $chantier('parametres', '1.4'))
+        // Lot 1.4 — clients : cabinets, praticiens, adresses de livraison.
+        Route::middleware('can:'.Permission::GererClients->value)
+            ->prefix('clients')
+            ->name('clients.')
+            ->group(function () {
+                Route::get('/', [CabinetController::class, 'index'])->name('index');
+                Route::get('/nouveau', [CabinetController::class, 'create'])->name('create');
+                Route::post('/', [CabinetController::class, 'store'])->name('store');
+                Route::get('/{cabinet}', [CabinetController::class, 'show'])->name('show');
+                Route::get('/{cabinet}/modifier', [CabinetController::class, 'edit'])->name('edit');
+                Route::put('/{cabinet}', [CabinetController::class, 'update'])->name('update');
+                Route::post('/{cabinet}/archiver', [CabinetController::class, 'archive'])->name('archive');
+                Route::post('/{cabinet}/restaurer', [CabinetController::class, 'restaure'])->name('restaure');
+
+                Route::post('/{cabinet}/praticiens', [PraticienController::class, 'store'])->name('praticiens.store');
+                Route::put('/{cabinet}/praticiens/{praticien}', [PraticienController::class, 'update'])->name('praticiens.update');
+                Route::post('/{cabinet}/praticiens/{praticien}/archiver', [PraticienController::class, 'archive'])->name('praticiens.archive');
+                Route::post('/{cabinet}/praticiens/{praticien}/restaurer', [PraticienController::class, 'restaure'])->name('praticiens.restaure');
+
+                Route::post('/{cabinet}/adresses', [AdresseLivraisonController::class, 'store'])->name('adresses.store');
+                Route::put('/{cabinet}/adresses/{adresse}', [AdresseLivraisonController::class, 'update'])->name('adresses.update');
+                Route::post('/{cabinet}/adresses/{adresse}/archiver', [AdresseLivraisonController::class, 'archive'])->name('adresses.archive');
+                Route::post('/{cabinet}/adresses/{adresse}/restaurer', [AdresseLivraisonController::class, 'restaure'])->name('adresses.restaure');
+            });
+
+        Route::get('/parametres', $chantier('parametres', '5.9'))
             ->middleware('can:'.Permission::ParametrerLaboratoire->value)
             ->name('parametres');
 

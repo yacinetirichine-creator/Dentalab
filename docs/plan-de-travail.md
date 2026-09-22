@@ -37,7 +37,7 @@ demander à un expert-comptable et à un juriste : [`phase-0-cadrage.md`](phase-
 | 1.1 ✅ | Squelette Laravel + Inertia + React, CI verte | Un test « la page d'accueil répond 200 » |
 | 1.2 ✅ | Multi-tenant : table `laboratoires`, colonne `laboratoire_id` sur toute table métier, filtrage automatique | Test de cloisonnement : le labo A ne voit jamais une donnée du labo B |
 | 1.3 ✅ | Comptes, connexion, rôles (gérant, prothésiste, secrétaire, livreur, dentiste), double authentification pour les gérants | Un test par rôle : ce qu'il voit, ce qu'il ne voit pas |
-| 1.4 | Clients : cabinets, praticiens rattachés, adresses de livraison | Création, modification, archivage |
+| 1.4 ✅ | Clients : cabinets, praticiens rattachés, adresses de livraison | Création, modification, archivage |
 | 1.5 | Catalogue : articles, gammes, prix, TVA par article, grilles tarifaires et remises par client | Test du calcul de prix avec remise client |
 | 1.6 ✅ | Internationalisation : sortir les chaînes d'interface des composants vers des fichiers de traduction, traduire les messages de validation en français | Un test qui échoue si une chaîne d'interface est écrite en dur |
 
@@ -45,6 +45,11 @@ demander à un expert-comptable et à un juriste : [`phase-0-cadrage.md`](phase-
 > React, ce que la règle n° 7 interdit. Ils vivent maintenant dans
 > `lang/fr/interface.php`, et un test relit les composants à chaque exécution :
 > la dette ne peut plus se reformer sans faire rougir la CI.
+
+> **Le lot 1.4 a été construit avant la phase 0**, à la demande du porteur du
+> projet. Chaque hypothèse de modélisation est consignée dans
+> [`decisions/002-modele-clients.md`](decisions/002-modele-clients.md), avec le
+> coût de sa correction. À reprendre point par point lors de la première visite.
 
 **Fin de phase 1** : un gérant peut créer son labo, ses utilisateurs, ses clients et son catalogue.
 

@@ -133,6 +133,30 @@ php artisan laboratoire:creer
 
 qui crée le laboratoire, son compte gérant et un mot de passe affiché une seule fois.
 
+## Clients : cabinets, praticiens, adresses
+
+Trois tables, toutes cloisonnées par laboratoire :
+
+- **`cabinets`** — le client au sens commercial, celui qu'on facture. Porte
+  l'adresse de facturation et le délai de règlement.
+- **`praticiens`** — les dentistes rattachés à un cabinet. Ce sont eux qui commandent.
+- **`adresses_livraison`** — où porter les travaux. Un cabinet peut en avoir
+  plusieurs, dont une principale.
+
+**Rien ne se supprime, tout s'archive** (trait `Archivable`). Un cabinet porte un
+historique de travaux et de factures qui doit être conservé plusieurs années (§4 du
+cahier des charges). `archiver()` le retire des listes, `restaurer()` l'y remet.
+
+```php
+Cabinet::actifs()->get();     // ce qu'on affiche par défaut
+Cabinet::archives()->get();   // l'onglet « archivés »
+```
+
+> ⚠️ **Ce modèle repose sur des hypothèses non vérifiées.** Il a été construit avant
+> les visites de laboratoires. Les neuf hypothèses et le coût de leur correction sont
+> listés dans [`docs/decisions/002-modele-clients.md`](../../docs/decisions/002-modele-clients.md).
+> La plus lourde : *un praticien appartient-il à un seul cabinet ?*
+
 ## Les textes affichés
 
 Aucune chaîne d'interface n'est écrite dans un composant. Tout vit dans

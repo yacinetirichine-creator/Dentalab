@@ -25,6 +25,7 @@ class Menu
 
         $entrees = [
             ['libelle' => __('interface.menu.tableauDeBord'), 'route' => 'tableau-de-bord', 'permission' => null],
+            ['libelle' => __('interface.menu.clients'), 'route' => 'clients.index', 'permission' => Permission::GererClients],
             ['libelle' => __('interface.menu.nouvelleCommande'), 'route' => 'commandes.nouvelle', 'permission' => Permission::SaisirCommande],
             ['libelle' => __('interface.menu.atelier'), 'route' => 'atelier', 'permission' => Permission::ValiderEtapeFabrication],
             ['libelle' => __('interface.menu.tournee'), 'route' => 'tournee', 'permission' => Permission::VoirTournee],

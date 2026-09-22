@@ -20,8 +20,8 @@ place. Le code métier attend les réponses du terrain.
 | 1.2 — Multi-laboratoires et cloisonnement des données | ✅ fait |
 | 1.3 — Comptes, connexion, rôles, double authentification | ✅ fait |
 | 1.6 — Internationalisation des écrans | ✅ fait |
+| 1.4 — Clients (cabinets, praticiens, adresses) | ✅ fait, [sous hypothèses](docs/decisions/002-modele-clients.md) |
 | **Phase 0 — visites de labos, réglementaire, maquettes** | ⬜ **à faire — chemin critique** |
-| 1.4 — Clients (cabinets et praticiens) | ⬜ dépend de la phase 0 |
 | 1.5 — Catalogue et tarifs | ⬜ dépend de la phase 0 |
 
 **La phase 0 se mène en parallèle et conditionne la suite** :
@@ -34,6 +34,7 @@ qui contacter et quoi demander.
 |---|---|
 | [`docs/cahier-des-charges.md`](docs/cahier-des-charges.md) | **Référence** : périmètre, réglementaire, technique, planning, budget, risques |
 | [`docs/plan-de-travail.md`](docs/plan-de-travail.md) | Découpage en lots, phase par phase |
+| [`docs/decisions/002-modele-clients.md`](docs/decisions/002-modele-clients.md) | **Les hypothèses du lot 1.4**, à confirmer lors de la première visite de laboratoire |
 | [`docs/phase-0-cadrage.md`](docs/phase-0-cadrage.md) | **Comment mener la phase 0** : trouver les labos pilotes, la trame de visite, les vérifications réglementaires |
 | [`docs/modele-de-donnees.md`](docs/modele-de-donnees.md) | Première esquisse des tables, à valider avant la première migration |
 

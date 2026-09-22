@@ -22,6 +22,7 @@ class AccesParRoleTest extends TestCase
 
     /** Tous les écrans protégés de l'application. */
     protected const ECRANS = [
+        '/clients',
         '/parametres',
         '/facturation',
         '/commandes/nouvelle',
@@ -37,6 +38,7 @@ class AccesParRoleTest extends TestCase
     {
         return [
             'gérant' => [Role::Gerant, [
+                '/clients',
                 '/parametres',
                 '/facturation',
                 '/commandes/nouvelle',

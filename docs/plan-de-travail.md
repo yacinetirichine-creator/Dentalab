@@ -24,14 +24,18 @@ conditionnent tout le reste.
 > **Ne pas sauter cette phase.** Le risque n° 1 du projet (§8 du cahier des charges)
 > est de construire un outil logique sur le papier mais inutilisable à l'établi.
 
+**Comment la mener concrètement** — où trouver les laboratoires pilotes, quoi leur
+proposer, la trame de visite question par question, les vérifications réglementaires à
+demander à un expert-comptable et à un juriste : [`phase-0-cadrage.md`](phase-0-cadrage.md).
+
 ---
 
 ## Phase 1 — Socle (3 semaines)
 
 | Lot | Contenu | Tests attendus |
 |---|---|---|
-| 1.1 | Squelette Laravel + Inertia + React, base PostgreSQL, CI verte | Un test « la page d'accueil répond 200 » |
-| 1.2 | Multi-tenant : table `laboratoires`, colonne `laboratoire_id` sur toute table métier, filtrage automatique | Test de cloisonnement : le labo A ne voit jamais une donnée du labo B |
+| 1.1 ✅ | Squelette Laravel + Inertia + React, CI verte | Un test « la page d'accueil répond 200 » |
+| 1.2 ✅ | Multi-tenant : table `laboratoires`, colonne `laboratoire_id` sur toute table métier, filtrage automatique | Test de cloisonnement : le labo A ne voit jamais une donnée du labo B |
 | 1.3 | Comptes, connexion, rôles (gérant, prothésiste, secrétaire, livreur, dentiste), double authentification pour les gérants | Un test par rôle : ce qu'il voit, ce qu'il ne voit pas |
 | 1.4 | Clients : cabinets, praticiens rattachés, adresses de livraison | Création, modification, archivage |
 | 1.5 | Catalogue : articles, gammes, prix, TVA par article, grilles tarifaires et remises par client | Test du calcul de prix avec remise client |

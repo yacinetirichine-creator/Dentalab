@@ -11,8 +11,19 @@ sans installation, sur ordinateur, tablette et téléphone.
 
 ## État du projet
 
-🟡 **Phase 0 — cadrage.** Le cahier des charges est écrit, le code n'a pas commencé.
-Voir [`docs/plan-de-travail.md`](docs/plan-de-travail.md) pour la suite.
+🟡 **Phase 0 — cadrage.** Le cahier des charges est écrit et le socle technique est en
+place. Le code métier attend les réponses du terrain.
+
+| Lot | État |
+|---|---|
+| 1.1 — Squelette Laravel + Inertia + React, CI | ✅ fait |
+| 1.2 — Multi-laboratoires et cloisonnement des données | ✅ fait |
+| Phase 0 — visites de labos, réglementaire, maquettes | ⬜ à faire |
+| 1.3 — Comptes, rôles, double authentification | ⬜ à faire |
+
+**La phase 0 se mène en parallèle et conditionne la suite** :
+[`docs/phase-0-cadrage.md`](docs/phase-0-cadrage.md) explique comment la mener,
+qui contacter et quoi demander.
 
 ## Documents de référence
 
@@ -20,6 +31,7 @@ Voir [`docs/plan-de-travail.md`](docs/plan-de-travail.md) pour la suite.
 |---|---|
 | [`docs/cahier-des-charges.md`](docs/cahier-des-charges.md) | **Référence** : périmètre, réglementaire, technique, planning, budget, risques |
 | [`docs/plan-de-travail.md`](docs/plan-de-travail.md) | Découpage en lots, phase par phase |
+| [`docs/phase-0-cadrage.md`](docs/phase-0-cadrage.md) | **Comment mener la phase 0** : trouver les labos pilotes, la trame de visite, les vérifications réglementaires |
 | [`docs/modele-de-donnees.md`](docs/modele-de-donnees.md) | Première esquisse des tables, à valider avant la première migration |
 
 ## Structure du dépôt

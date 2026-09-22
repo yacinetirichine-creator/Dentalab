@@ -42,6 +42,48 @@ resources/js/
 
 Côté serveur, une route renvoie `Inertia::render('NomDeLaPage', [...props])`.
 
+## Le cloisonnement entre laboratoires
+
+C'est la règle n° 1 du projet. Chaque table métier appartient à un laboratoire, et
+aucun laboratoire ne doit jamais voir les données d'un autre.
+
+**Pour toute nouvelle table métier**, deux choses à faire — et rien d'autre :
+
+```php
+// 1. Dans la migration
+$table->foreignId('laboratoire_id')->constrained();
+
+// 2. Dans le modèle
+use App\Models\Concerns\AppartientAuLaboratoire;
+
+class Travail extends Model
+{
+    use AppartientAuLaboratoire;
+}
+```
+
+À partir de là, tout est automatique :
+
+- Chaque requête est filtrée sur le laboratoire courant. `Travail::all()` ne renvoie
+  jamais le travail d'un autre labo, et `Travail::find($id)` renvoie `null` si l'objet
+  appartient à quelqu'un d'autre.
+- `laboratoire_id` est rempli tout seul à la création.
+- Sans laboratoire courant défini, une exception est levée — le code refuse de servir
+  des données non cloisonnées plutôt que de tout renvoyer.
+
+Le laboratoire courant vient du **compte connecté**, jamais de l'URL ni d'un champ de
+formulaire (middleware `DefinirLaboratoireCourant`). Un utilisateur ne peut donc pas
+désigner le laboratoire d'un concurrent.
+
+Pour les rares cas où l'accès global est légitime (commande artisan, administration de
+la plateforme), il doit être explicite :
+
+```php
+app(LaboratoireCourant::class)->sansCloisonnement(fn () => Travail::all());
+```
+
+Les garde-fous sont testés dans `tests/Feature/CloisonnementTest.php`.
+
 ## Conventions
 
 Les règles du projet sont dans [`CLAUDE.md`](../../CLAUDE.md) à la racine.
